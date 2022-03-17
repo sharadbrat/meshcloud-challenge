@@ -1,0 +1,24 @@
+html {
+  @include UiTypographyParagraph();
+  font-family: $font-fallback;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #app {
+  height: 100%;
+  overscroll-behavior-y: none;
+}
+
+#app {
+  overflow: auto;
+  transition: color linear 100ms, background-color linear 100ms;
+  @include UiThemeElement() {
+    color: UiColor(shade-800);
+    background-color: UiColor(shade-100);
+  }
+}
+
+a:not(.ui-link-reset) {
+  @include UiTypographyLink();
+}
