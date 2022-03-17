@@ -1,7 +1,8 @@
 import Vuex, { Store } from 'vuex';
 import Vue from 'vue';
 
-import { UsersStoreModule } from '@/core/service/store-provider/modules/users.vuex';
+import { CustomersStoreModule } from './modules/customers.vuex';
+import { LimitedPaymentMethodsStoreModule } from './modules/limited-payment-methods.vuex';
 import { ThemesStoreModule } from '@/core/service/store-provider/modules/themes.vuex';
 import { StoreProviderService } from '@/core/service/store-provider/store-provider.service';
 import { StoreState } from '@/core/service/store-provider/store-state';
@@ -22,7 +23,8 @@ export class VuexStoreProviderServiceImpl extends StoreProviderService<Store<Sto
     this.store = new Store<StoreState>({
       // strict: true,
       modules: {
-        users: UsersStoreModule,
+        customers: CustomersStoreModule,
+        limitedPaymentMethods: LimitedPaymentMethodsStoreModule,
         themes: ThemesStoreModule,
       },
     });

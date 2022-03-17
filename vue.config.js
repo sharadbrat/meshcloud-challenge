@@ -17,14 +17,14 @@ module.exports = {
   },
   lintOnSave: 'warning',
   pwa: {
-    name: 'vue-clean-architecture-boilerplate',
+    name: 'meshcloud-challenge',
     msTileColor: '#29b6f6',
     themeColor: null,
     manifestOptions: {
-      name: 'vue-clean-architecture-boilerplate',
-      short_name: 'vue-clean-architecture-boilerplate',
+      name: 'meshcloud-challenge',
+      short_name: 'meshcloud-challenge',
       start_url: 'https://localhost:8080/',
-      description: 'vue-clean-architecture-boilerplate',
+      description: 'meshcloud-challenge',
       display: 'standalone',
       orientation: 'portrait',
       theme_color: 'transparent',

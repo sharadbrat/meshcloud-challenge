@@ -8,14 +8,12 @@ import { injectable } from 'inversify';
 export interface Environment {
   base: string;
 
-  users: {
-    login: string;
-    register: string;
-    me: string;
-    oauth: string;
-    sendRestorePassword: string;
+  customers: {
+    list: string;
   };
-
+  limitedPaymentMethods: {
+    create: string;
+  };
 }
 
 
@@ -47,7 +45,7 @@ export interface NetworkResponse<T> {
 @injectable()
 export abstract class NetworkService {
 
-  public readonly environment: Environment;
+  public environment: Environment;
 
   public abstract get<T>(url: string, options?: NetworkRequestOptions): Promise<NetworkResponse<T>>;
 

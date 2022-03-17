@@ -1,29 +1,22 @@
 import { Theme } from '@/core/entity/theme';
-import { UserEntity } from '@/core/entity/user';
+import { CustomerEntity } from '@/core/entity/customer';
+import { LimitedPaymentMethodEntity } from '@/core/entity/limited-payment-method';
 
 
-/**
- * @interface UsersStoreModuleState
- * @public
- */
-export interface UsersStoreModuleState {
-  user: UserEntity;
+export interface CustomersStoreModuleState {
+  customers: CustomerEntity[];
 }
 
+export interface LimitedPaymentMethodsStoreModuleState {
+  limitedPaymentMethods: LimitedPaymentMethodEntity[];
+}
 
-/**
- * @interface ThemesStoreModuleState
- * @public
- */
 export interface ThemesStoreModuleState {
   theme: Theme;
 }
 
-/**
- * @interface StoreState
- * @public
- */
 export interface StoreState {
-  users: UsersStoreModuleState;
+  customers: CustomersStoreModuleState;
+  limitedPaymentMethods: LimitedPaymentMethodsStoreModuleState;
   themes: ThemesStoreModuleState;
 }

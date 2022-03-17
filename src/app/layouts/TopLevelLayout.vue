@@ -36,14 +36,19 @@
 
       return [
         {
+          url: '',
+          title: 'Customers',
+          icon: 'account',
+        },
+        {
+          url: 'limited-payment-methods',
+          title: 'Payment methods',
+          icon: 'wallet',
+        },
+        {
           url: 'settings',
           title: 'Settings',
           icon: 'settings',
-        },
-        {
-          url: 'about',
-          title: 'About',
-          icon: 'question',
         },
       ];
     }

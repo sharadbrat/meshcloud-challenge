@@ -1,19 +1,10 @@
 import Vue from 'vue';
 import Router, { Route } from 'vue-router';
 
-import { LazyInject } from '@/core/ioc';
-import { AuthenticatedRouteGuard } from '@/core/service/guard/authenticated-route.guard';
-import { UnauthenticatedRouteGuard } from '@/core/service/guard/unauthenticated-route.guard';
-import { TrackerService } from '@/core/service/tracker/tracker.service';
-
 import PassThrough from '@/app/components/PassThrough.vue';
-import RegistrationView from '@/app/views/registration/RegistrationView.vue';
-import LoginView from '@/app/views/login/LoginView.vue';
-import ForgotPasswordView from '@/app/views/forgot-password/ForgotPasswordView.vue';
 import MainView from '@/app/views/main/MainView.vue';
-import AboutView from '@/app/views/about/AboutView.vue';
-import ChangelogView from '@/app/views/changelog/ChangelogView.vue';
 import SettingsView from '@/app/views/settings/SettingsView.vue';
+import LimitedPaymentMethodsView from '@/app/views/limited-payment-methods/LimitedPaymentMethodsView.vue';
 
 export class ApplicationRouter {
 
@@ -24,15 +15,6 @@ export class ApplicationRouter {
 
     this.router = this.createRouter();
   }
-
-  @LazyInject(AuthenticatedRouteGuard)
-  private authenticatedRouteGuard: AuthenticatedRouteGuard;
-
-  @LazyInject(UnauthenticatedRouteGuard)
-  private unauthenticatedRouteGuard: UnauthenticatedRouteGuard;
-
-  @LazyInject(TrackerService)
-  private tracker: TrackerService;
 
   public getRouter() {
     return this.router;
@@ -46,8 +28,6 @@ export class ApplicationRouter {
         {
           path: '',
           component: PassThrough,
-          // REVIEW: uncomment this line to enable auth guard
-          // beforeEnter: this.authenticatedRouteGuard.doGuard,
           children: [
             {
               path: '',
@@ -55,46 +35,17 @@ export class ApplicationRouter {
               component: MainView,
             },
             {
+              path: 'limited-payment-methods',
+              name: 'limited-payment-methods',
+              component: LimitedPaymentMethodsView,
+            },
+            {
               path: 'settings',
               name: 'settings',
               component: SettingsView,
             },
-            {
-              path: 'about',
-              name: 'about',
-              component: AboutView,
-            },
-            {
-              path: 'about/changelog',
-              name: 'changelog',
-              component: ChangelogView,
-            },
           ],
         },
-
-        // routes for unauthenticated user
-        {
-          path: '/registration',
-          name: 'registration',
-          // REVIEW: uncomment this line to enable auth guard
-          // beforeEnter: this.unauthenticatedRouteGuard.doGuard,
-          component: RegistrationView,
-        },
-        {
-          path: '/login',
-          name: 'login',
-          // REVIEW: uncomment this line to enable auth guard
-          // beforeEnter: this.unauthenticatedRouteGuard.doGuard,
-          component: LoginView,
-        },
-        {
-          path: '/forgot-password',
-          name: 'forgot-password',
-          // REVIEW: uncomment this line to enable auth guard
-          // beforeEnter: this.unauthenticatedRouteGuard.doGuard,
-          component: ForgotPasswordView,
-        },
-
 
         // redirect to app by default
         {
@@ -114,7 +65,6 @@ export class ApplicationRouter {
       return;
     }
 
-    this.tracker.pageView(to.name);
     // scroll to the top
     document.body.scrollIntoView();
   }

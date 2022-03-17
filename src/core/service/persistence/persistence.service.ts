@@ -2,8 +2,7 @@ import { injectable } from 'inversify';
 
 
 export enum PersistenceServiceValueName {
-  TOKEN = 'token',
-  AFTER_LOGIN_URL = 'after_login_url',
+  LIMITED_PAYMENT_METHODS = '',
   THEME = 'theme',
 }
 
@@ -18,7 +17,7 @@ export abstract class PersistenceService {
 
   public static readonly VALUE_NAME = PersistenceServiceValueName;
 
-  public abstract storeValue(valueName: PersistenceServiceValueName, token: string): boolean;
+  public abstract storeValue(valueName: PersistenceServiceValueName, value: string): boolean;
 
   public abstract loadValue(valueName: PersistenceServiceValueName): string;
 

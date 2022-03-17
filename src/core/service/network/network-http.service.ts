@@ -16,8 +16,6 @@ import { ServerError, UndefinedError } from '@/core/utils/errors';
  */
 export class NetworkServiceHttpImpl extends NetworkService {
 
-  public readonly environment: Environment;
-
   private axios: AxiosInstance;
 
   public constructor(
@@ -31,7 +29,7 @@ export class NetworkServiceHttpImpl extends NetworkService {
       baseURL: this.environment.base,
     });
 
-    this.axios.interceptors.response.use(null, this.unauthorizedResponseInterceptor);
+    this.axios.interceptors.response.use(this.responseInterceptor, this.unauthorizedResponseInterceptor);
     this.axios.interceptors.request.use(this.tokenRequestInterceptor);
   }
 
@@ -62,16 +60,25 @@ export class NetworkServiceHttpImpl extends NetworkService {
 
   private tokenRequestInterceptor = config => {
     const modifiedConfig = Object.assign({}, config);
-    modifiedConfig.headers = { 'x-access-token': this.persistenceService.loadValue(PersistenceService.VALUE_NAME.TOKEN) };
+    const { apiToken } = this.configService.frontendConfig;
+    modifiedConfig.headers = {
+      Authorization: `Basic ${apiToken}`,
+      Accept: 'application/vnd.meshcloud.api.meshcustomer.v1.hal+json',
+    };
     return modifiedConfig;
   };
 
-  private unauthorizedResponseInterceptor = error => {
-    if (this.isUnauthorizedErrorStatus(error)) {
-      this.persistenceService.clearValue(PersistenceService.VALUE_NAME.TOKEN);
-    }
-    return Promise.reject(error);
+  // unifies the response to make it generic
+  private responseInterceptor = response => {
+    const modifiedResponse = Object.assign({}, response);
+    modifiedResponse.data = { data: response.data };
+    return modifiedResponse;
   };
+
+  // if (this.isUnauthorizedErrorStatus(error)) {
+  //   this.persistenceService.clearValue(PersistenceService.VALUE_NAME.TOKEN);
+  // }
+  private unauthorizedResponseInterceptor = error => Promise.reject(error);
 
   private isUnauthorizedErrorStatus(error: any) {
     try {
@@ -100,12 +107,11 @@ export class NetworkServiceHttpImpl extends NetworkService {
     const frontConfig = this.configService.frontendConfig;
     return {
       base: frontConfig.apiGateway,
-      users: {
-        me: '/users',
-        login: '/users/login',
-        register: '/users/register',
-        oauth: '/users/oauth',
-        sendRestorePassword: '/users/send_restore',
+      customers: {
+        list: '/customers',
+      },
+      limitedPaymentMethods: {
+        create: '/customers/{customerIdentifier}/limitedPaymentMethods/{paymentIdentifier}',
       },
     };
   }

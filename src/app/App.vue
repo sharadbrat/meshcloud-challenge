@@ -30,7 +30,6 @@
 
   import { LazyInject } from '@/core/ioc';
   import { Theme } from '@/core/entity/theme';
-  import { ErrorTrackerService } from '@/core/service/error-tracker/error-tracker.service';
   import { GetThemeUseCase } from '@/core/use-case/theme/get-theme.use-case';
 
   import UiIconsDefinition from '@/app/ui-kit/UiIconsDefinition.vue';
@@ -55,9 +54,6 @@
 
     public isLoading: boolean = true;
 
-    @LazyInject(ErrorTrackerService)
-    public errorTrackerService: ErrorTrackerService;
-
     @LazyInject(GetThemeUseCase)
     public getThemeUseCase: GetThemeUseCase;
 
@@ -69,7 +65,7 @@
     public routeTransitionName: RouteTransitionName = RouteTransitionName.SLIDE_IN;
 
     @Watch('$route')
-    private onRouteChange(to: Route, from: Route) {
+    public onRouteChange(to: Route, from: Route) {
       if (!from || !to) {
         return;
       }
@@ -87,7 +83,6 @@
     }
 
     public created() {
-      this.errorTrackerService.setupErrorTracking();
       this.printVersion();
 
       this.loadData();

@@ -1,6 +1,7 @@
 <template>
   <button
     class="ui-button"
+    :type="buttonType"
     :class="[
       widthClass,
       typeClass,
@@ -49,6 +50,8 @@
     @Prop() size?: UiButtonSize;
 
     @Prop() shape?: UiButtonShape;
+
+    @Prop({ default: null }) buttonType?: string;
 
     get typeClass() {
       const type = this.type || UiButton.defaultButtonType;

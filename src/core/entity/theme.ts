@@ -1,7 +1,3 @@
-/**
- * @enum Theme
- * @public
- */
 export enum Theme {
   DEFAULT = 'default',
   DARK = 'dark',
@@ -9,10 +5,6 @@ export enum Theme {
 }
 
 
-/**
- * @class ThemeEntity
- * @public
- */
 export class ThemeEntity {
 
   public static get DEFAULT(): Theme { return Theme.DEFAULT; }

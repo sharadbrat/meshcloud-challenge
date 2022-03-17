@@ -1,10 +1,10 @@
 <template>
   <figure
-    aria-label="vue-clean-architecture-boilerplate"
+    aria-label="Meshcloud challenge"
     class="ui-logo"
   >
     <UiIcon class="ui-logo__icon" name="lock" size="lg"/>
-    <component :is="tag" class="ui-logo__text">vue-clean-architecture-boilerplate</component>
+    <component :is="tag" class="ui-logo__text">Meshcloud challenge</component>
   </figure>
 </template>
 
