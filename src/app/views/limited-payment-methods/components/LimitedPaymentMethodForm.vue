@@ -57,7 +57,7 @@
         </UiButton>
       </div>
 
-      <UiButton type="secondary" size="sm" @click="onCustomAttributeAddClick">
+      <UiButton type="secondary" buttonType="button" size="sm" @click="onCustomAttributeAddClick">
         Add custom attribute
         <UiIcon name="add"/>
       </UiButton>
@@ -159,8 +159,16 @@
         amount: this.amount,
         userId: this.userId,
         expirationDate: this.expirationDate,
-        customAttributes: {},
+        customAttributes: this.customAttributes.reduce((bucket, el) => ({ ...bucket, [el.name]: el.value }), {}),
       });
+
+      this.customerIdentifier = '';
+      this.paymentIdentifier = '';
+      this.name = '';
+      this.amount = 0;
+      this.userId = '';
+      this.expirationDate = '';
+      this.customAttributes = [];
 
       this.createLimitedPaymentMethodUseCase.perform(entity);
     }
